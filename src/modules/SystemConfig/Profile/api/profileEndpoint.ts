@@ -8,7 +8,7 @@ const profileEndpoint = api.injectEndpoints({
   endpoints: (builder) => ({
     getProfile: builder.query<ApiResponse<ProfileTypes>, void>({
       query: (): FetchArgs => ({
-        url: "/member/profile",
+        url: "/btob/profile",
         method: "GET",
       }),
       providesTags: [CREATE_TAGS("PROFILE")],

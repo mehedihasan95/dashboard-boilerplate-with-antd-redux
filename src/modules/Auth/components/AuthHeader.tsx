@@ -1,38 +1,49 @@
 import { Space, Typography } from "antd";
 import React from "react";
 import useBreakpoint from "../../../hooks/useBreakpoint";
+import { useTimer } from "../hooks/useTimer";
 
 interface Props {
   title: string;
   description: string;
+  timer?: boolean;
 }
 
-const AuthHeader: React.FC<Props> = ({ title, description }) => {
+const AuthHeader: React.FC<Props> = ({ title, description, timer }) => {
   const { lg } = useBreakpoint();
+  const { time, isWarning } = useTimer();
 
   return (
     <React.Fragment>
       <Space
         direction="vertical"
-        align="center"
-        style={{ width: "100%", marginBottom: "3rem" }}
+        align={lg ? "start" : "center"}
+        style={{ width: "100%", marginBottom: lg ? "3rem" : "2rem" }}
       >
-        <Typography.Text
-          strong
+        <Typography.Title
           style={{
-            fontSize: lg ? "1.5rem" : "1rem",
-            textTransform: "uppercase",
             display: "block",
+            color: lg ? "inherit" : "white",
           }}
         >
           {title}
-        </Typography.Text>
+        </Typography.Title>
         <Typography.Text
           type="secondary"
-          style={{ textAlign: "center", display: "block" }}
+          style={{
+            display: "block",
+            textAlign: lg ? "left" : "center",
+            color: lg ? "#85898B" : "#cccccc",
+          }}
         >
           {description}
         </Typography.Text>
+
+        {timer && (
+          <Typography.Title level={3} type={isWarning ? "danger" : "success"}>
+            {time.minutes}:{time.seconds}
+          </Typography.Title>
+        )}
       </Space>
     </React.Fragment>
   );

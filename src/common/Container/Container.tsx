@@ -6,7 +6,6 @@ import {
   Input,
   Row,
   Space,
-  Tooltip,
   Typography,
 } from "antd";
 import React, { useEffect, useMemo, useState } from "react";
@@ -102,7 +101,7 @@ const Container: React.FC<Props> = ({
               defaultValue={searchParams.get("key") || undefined}
               maxLength={50}
               prefix={<Iconify icon="flat-color-icons:search" />}
-              placeholder={options.placeholder}
+              placeholder={activeOptions.placeholder}
               onChange={(value) => searchDebounce(value.target.value)}
             />
           )}
@@ -172,18 +171,16 @@ const Container: React.FC<Props> = ({
                 >
                   <Typography.Text>Filter By</Typography.Text>
                 </Dropdown.Button>
-                <Tooltip
+                <Button
                   title="Filter Reset"
-                  placement="topLeft"
-                  children={
-                    <Button
-                      onClick={() => {
-                        dispatch(resetFilter());
-                        navigate(window.location.pathname, { replace: true });
-                      }}
-                      icon={<Iconify icon="carbon:reset" />}
-                    />
-                  }
+                  onClick={() => {
+                    dispatch(resetFilter());
+                    navigate(window.location.pathname, {
+                      replace: true,
+                      state: { reset: true },
+                    });
+                  }}
+                  icon={<Iconify icon="carbon:reset" />}
                 />
               </>
             )}

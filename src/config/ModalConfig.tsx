@@ -16,10 +16,10 @@ const ModalConfig: React.FC = () => {
       footer={null}
       title={
         <Typography.Paragraph strong style={{ fontSize: "1rem" }}>
-          {title}
+          {title || "CONTENT TITLE"}
         </Typography.Paragraph>
       }
-      children={content}
+      children={content || <>NO CONTENT</>}
     />
   );
 };

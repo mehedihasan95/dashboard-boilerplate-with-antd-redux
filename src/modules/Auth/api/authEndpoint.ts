@@ -3,7 +3,6 @@ import api from "../../../app/api/api";
 import { ApiResponse, ApiResult } from "../../../app/utilities/response";
 import { ForgotPassword, LoginTypes } from "../types/AuthTypes";
 import { CREATE_TAGS } from "../../../app/utilities/tags";
-import { onQueryResponse } from "../../../app/utilities/onQueryResponse";
 import { setAuth } from "../../../app/slice/authSlice";
 import { openNotification } from "../../../app/slice/notificationSlice";
 
@@ -11,7 +10,7 @@ const authEndpoint = api.injectEndpoints({
   endpoints: (builder) => ({
     login: builder.mutation<ApiResponse<ApiResult>, LoginTypes>({
       query: (data): FetchArgs => ({
-        url: "/auth/member/login",
+        url: "/auth/agent/login",
         method: "POST",
         body: data,
       }),
@@ -36,9 +35,6 @@ const authEndpoint = api.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      async onQueryStarted(_, { dispatch, queryFulfilled }) {
-        await onQueryResponse(queryFulfilled, dispatch);
-      },
       invalidatesTags: [CREATE_TAGS("PROFILE")],
     }),
 
@@ -48,9 +44,6 @@ const authEndpoint = api.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      async onQueryStarted(_, { dispatch, queryFulfilled }) {
-        await onQueryResponse(queryFulfilled, dispatch);
-      },
       invalidatesTags: [CREATE_TAGS("PROFILE")],
     }),
 
@@ -60,13 +53,10 @@ const authEndpoint = api.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      async onQueryStarted(_, { dispatch, queryFulfilled }) {
-        await onQueryResponse(queryFulfilled, dispatch);
-      },
       invalidatesTags: [CREATE_TAGS("PROFILE")],
     }),
 
-    ////
+    /// END ///
   }),
 });
 

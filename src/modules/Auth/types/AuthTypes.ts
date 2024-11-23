@@ -1,12 +1,15 @@
 export type LoginTypes = {
   email: string;
   password: string;
+  remember: boolean;
 };
 
 export type ForgotPassword = Partial<{
-  email: string;
   otp: string;
+  token: string;
+  email: string;
   password: string;
+  otp_type: string;
   confirm_password: string;
 }>;
 

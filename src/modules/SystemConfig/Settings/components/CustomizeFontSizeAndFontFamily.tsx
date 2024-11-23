@@ -1,4 +1,4 @@
-import { Card, Flex, Radio, Space, Typography } from "antd";
+import { Flex, Radio, Space, Typography } from "antd";
 import React from "react";
 import { useAppDispatch, useAppSelector } from "../../../../app/store";
 import useBreakpoint from "../../../../hooks/useBreakpoint";
@@ -56,14 +56,17 @@ const CustomizeFontSizeAndFontFamily: React.FC = () => {
           <Space direction="vertical" style={{ width: "100%" }}>
             {fontFamilies.map(({ label, value }, index) => (
               <Radio key={index} value={value}>
-                <Card size="small" title={label} style={{ fontFamily: value }}>
+                <div style={{ fontFamily: value, background: "transparent" }}>
+                  <Typography.Title level={5} style={{ fontFamily: value }}>
+                    {label}
+                  </Typography.Title>
                   <Typography.Text
                     style={{ fontFamily: value, fontSize: "2rem" }}
                   >
                     Whereas disregard and contempt for human rights have
                     resulted.
                   </Typography.Text>
-                </Card>
+                </div>
               </Radio>
             ))}
           </Space>

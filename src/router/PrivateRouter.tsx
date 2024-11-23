@@ -10,7 +10,9 @@ interface Props {
 
 const PrivateRouter: React.FC<Props> = ({ children }) => {
   const { token } = useAppSelector(AuthState);
-  const { isLoading, isSuccess } = useGetProfileQuery();
+  const { isLoading, isSuccess } = useGetProfileQuery(undefined, {
+    skip: !token,
+  });
   const location = useLocation();
 
   if (isLoading) {

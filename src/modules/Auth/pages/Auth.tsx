@@ -1,88 +1,91 @@
 import React, { useEffect } from "react";
-import { Outlet } from "react-router-dom";
-import { Card } from "antd";
 import { useAppDispatch, useAppSelector } from "../../../app/store";
 import { AuthState, clearMessage } from "../../../app/slice/authSlice";
+import { Outlet } from "react-router-dom";
+import useBreakpoint from "../../../hooks/useBreakpoint";
+import { ThemeState } from "../../../app/slice/themeSlice";
+import AuthFooter from "../components/AuthFooter";
+import AuthCarousel from "../components/AuthCarousel";
+import { auth_slider } from "../../../utilities/image.collection";
+import useAuthCarousel from "../hooks/useAuthCarousel";
 
 const Auth: React.FC = () => {
-  const year: number = new Date().getFullYear();
+  const { mode } = useAppSelector(ThemeState);
   const { message } = useAppSelector(AuthState);
   const dispatch = useAppDispatch();
+  const { lg } = useBreakpoint();
+  const { active } = useAuthCarousel();
 
   useEffect(() => {
-    if (message) {
-      setTimeout(() => {
-        dispatch(clearMessage());
-      }, 5000);
-    }
-  }, [message]);
+    if (!message) return;
+    const timer: NodeJS.Timeout = setTimeout(() => {
+      dispatch(clearMessage());
+    }, 30000);
+    return () => clearTimeout(timer);
+  }, [message, dispatch]);
 
   return (
-    <div style={{ minHeight: "100vh", background: "#f5f5f5" }}>
+    <section
+      style={{
+        minHeight: "100vh",
+        backgroundColor: mode === "light" ? "#f3f3f4" : "#141414",
+        display: "flex",
+        flexDirection: lg ? "row" : "column",
+      }}
+    >
+      {lg && (
+        <div
+          style={{
+            width: "40%",
+            maxWidth: "500px",
+            minWidth: "300px",
+            height: "100vh",
+            overflow: "hidden",
+            position: "relative",
+          }}
+        >
+          <AuthCarousel />
+        </div>
+      )}
+
       <div
         style={{
-          minHeight: "50vh",
-          position: "relative",
+          flex: 1,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: lg ? "start" : "center",
+          padding: lg ? "3rem" : "1rem",
+          backgroundColor:
+            mode === "light"
+              ? "rgba(255, 255, 255, 0.9)"
+              : "rgba(31, 31, 31, 0.9)",
+          backgroundImage: lg
+            ? "none"
+            : `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${auth_slider[active]})`,
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center",
         }}
       >
-        {/* <video
+        <div
           style={{
             width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            position: "absolute",
-            top: 0,
-            left: 0,
+            maxWidth: lg ? "400px" : "350px",
+            padding: "1rem",
+            background: !lg ? "rgba(255, 255, 255, 0.2)" : "transparent",
+            boxShadow: !lg ? "0 4px 30px rgba(0, 0, 0, 0.1)" : "none",
+            backdropFilter: !lg ? "blur(10px)" : "none",
+            border: !lg ? "1px solid rgba(255, 255, 255, 0.3)" : "none",
+            borderRadius: "12px",
           }}
-          autoPlay
-          loop
-          muted
         >
-          <source src={auth_bg} type='video/mp4' />
-          Your browser does not support the video tag.
-        </video> */}
+          <Outlet />
+        </div>
       </div>
 
-      <h1
-        style={{
-          position: "absolute",
-          top: 20,
-          left: 20,
-          lineHeight: 0,
-        }}
-      >
-        M360ICT
-      </h1>
-      <Card
-        style={{
-          width: "25vw",
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          minWidth: "340px",
-        }}
-      >
-        <Outlet />
-      </Card>
-
-      <footer
-        style={{
-          position: "absolute",
-          bottom: 0,
-          left: 0,
-          right: 0,
-          textAlign: "center",
-          padding: "0.5rem",
-        }}
-      >
-        Copyright © {year}{" "}
-        <a href="https://m360ict.com/" target="_blank">
-          M360ICT.
-        </a>{" "}
-        All rights reserved.
-      </footer>
-    </div>
+      <AuthFooter />
+    </section>
   );
 };
 

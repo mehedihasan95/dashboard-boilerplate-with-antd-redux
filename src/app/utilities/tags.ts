@@ -1,4 +1,13 @@
-const tagKeys = ["PROFILE", "DASHBOARD"] as const;
+const tagKeys = [
+  "PROFILE",
+  "DASHBOARD",
+  "HOTEL",
+  "FLIGHT",
+  "CONFIGURATION",
+  "ADMINISTRATION",
+  "PAYMENT",
+  "SUPPORT",
+] as const;
 
 export const TagTypes = Object.fromEntries(
   tagKeys.map((key) => [key, key])

@@ -9,6 +9,11 @@ import notificationSlice from "./slice/notificationSlice";
 import modalSlice from "./slice/modalSlice";
 import drawerSlice from "./slice/drawerSlice";
 import filterSlice from "./slice/filterSlice";
+import {
+  errorMiddleware,
+  performanceMiddleware,
+  successMiddleware,
+} from "./utilities/middleware";
 
 const persistConfig = {
   key: "ROOT_WEB_NAME",
@@ -35,7 +40,12 @@ const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
-    }).concat(api.middleware),
+    }).concat(
+      api.middleware,
+      performanceMiddleware,
+      successMiddleware,
+      errorMiddleware
+    ),
   devTools: process.env.NODE_ENV === "development",
 });
 

@@ -12,6 +12,7 @@ export type ApiResult = Partial<{
   data: unknown;
   success: boolean;
   message: string;
+  token: string;
 }>;
 
 export type SetStateAnyOrNull = Dispatch<SetStateAction<unknown | null>>;

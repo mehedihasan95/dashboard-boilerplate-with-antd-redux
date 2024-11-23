@@ -1,14 +1,35 @@
 export type ProfileTypes = {
-  restaurant_id: number;
-  company_name: string | null;
+  id: number;
+  agency_id: number;
+  name: string;
   email: string;
-  owner_name: string;
-  phone: string;
-  restaurant_address: string;
-  restaurant_bin_number: string;
-  restaurant_hotline: string;
-  restaurant_logo: string;
-  restaurant_name: string;
-  restaurant_owner_name: string;
-  restaurant_version: number;
+  mobile_number: string;
+  photo: string;
+  status: boolean;
+  created_at: string;
+  created_by: string;
+  twoFA: number;
+  otp: number;
+  otpExpires: string;
+  requested_status: string;
+  agency_status: boolean;
+  agency_name: string;
+  agency_logo: string;
+  send_email_id: string;
+  send_email_pass: string;
+  address: string;
+  balance: string;
+  permissions: {
+    role_id: number;
+    role_name: string;
+    status: number;
+    permissions: Array<{
+      permission_id: number;
+      permission_name: string;
+      read: number;
+      write: number;
+      update: number;
+      delete: number;
+    }>;
+  };
 };
